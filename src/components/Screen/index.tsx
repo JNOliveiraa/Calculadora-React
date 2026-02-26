@@ -5,9 +5,9 @@ type screenProps = {
 
 export function Screen ({previousValue, currentValue}: screenProps) {
   return (
-    <div>
-      <div>{previousValue}</div>
-      <div>{currentValue}</div>
+    <div className="screen">
+      <div className="previous">{previousValue}</div>
+      <div className="current">{currentValue}</div>
     </div>
   )
 }

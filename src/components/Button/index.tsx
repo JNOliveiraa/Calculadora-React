@@ -1,10 +1,10 @@
-type buttonProps = {
+type ButtonProps = {
   children: React.ReactNode
   onClick?: () => void
-  className: string
+  className?: string
 }
 
-export function Button ({children, onClick, className}: buttonProps) {
+export function Button ({children, onClick, className}: ButtonProps) {
   return (
     <button className= {className} onClick={onClick}> {children}</button>
   )
