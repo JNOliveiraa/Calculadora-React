@@ -1,27 +1,71 @@
 import "./App.css"
 
+import { useState } from "react"
+
 import {Button} from "./components/Button"
 import {Screen} from "./components/Screen"
 
 
 export default function App () {
 
-const buttons = [
-  "C", "+/-", "/", "+",
+  const [currentValue, setCurrentValue] = useState("")
 
-  "7", "8", "9", "-",
+  function handleClick(value: string) {
 
-  "4", "5", "6", "x",
+    
+    if (value === "C") {
+      setCurrentValue((prev) => prev.slice(0, -1))
+      return
+    }
+    if (value === "=") {
+      
+      try {
+        const result = eval (currentValue.replace("x", "*"))
+        setCurrentValue(String(result))
+      } catch {
+        setCurrentValue("Error")
+      }
+      return
+      
+    }
+    
+    if (value === "cc") {
+      setCurrentValue("")
+      return
+    }
+    
+  const operators = ["+", "-", "x", "/"]
 
-  "1", "2", "3", "=",
+  if (operators.includes(value)) {
+    const lastChar = currentValue.slice(-1)
+    
+    if (operators.includes(lastChar)) {
+        return
+      }
+    }  
+    
+  setCurrentValue((prev) => prev + value)
+  }
+
+  const buttons = [
+   "C", "cc", "/", "+",
+
+   "7", "8", "9", "-",
+
+    "4", "5", "6", "x",
+
+   "1", "2", "3", "=",
 
   "0", "."
-]
+  ]
+
+
 
   return (
     <div className="calculator">
-       <Screen previousValue="145 + 23" 
-       currentValue="168"/> 
+       <Screen 
+        previousValue="" 
+        currentValue= {currentValue}/> 
 
         <div className="buttons">
           {buttons.map((btn, index) =>{
@@ -33,17 +77,19 @@ const buttons = [
 
             if (btn === "C") extraClass = "color"
             if (btn === "+") extraClass = "color"
-            if (btn === "+/-") extraClass = "color"
+            if (btn === "cc") extraClass = "color"
             if (btn === "/") extraClass = "color"
             if (btn === "-") extraClass = "color" 
             if (btn === "x") extraClass = "color"
       
             return (
 
-                <Button key={index} className= {`btn ${extraClass}`}> 
-                
+                <Button 
+                key={index} 
+                className= {`btn ${extraClass}`}
+                onClick={() => handleClick(btn)}
+                >
                 {btn} 
-
                </Button> 
             )
               
